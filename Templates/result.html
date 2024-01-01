@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Lotto HotPlace{% endblock %}
+
+{% block content %}
+    <section>
+      <form class="container justify-content-center align-content-center" action="/result" method="post">
+        <div class="d-flex justify-content-center align-content-center mb-4">
+          <h3 class="text-center">1등 되면 뽀찌 좀 주세요</h3>
+        </div>
+        <div class="d-flex justify-content-center align-content-center mb-4">
+          {% if results %}
+              <ul class="p-0">
+                  {% for result in results %}
+                    <ul class="m-2">
+                        <span class="game-number">게임{% if result['game'] < 10 %} {% endif %}{{ result['game'] }} : </span>
+                        {% for number in result['numbers'] %}
+                            <span class="lotto-ball range-{{ (number - 1) // 10 + 1 }}">{{ number }}</span>
+                        {% endfor %}
+                    </ul>
+                  {% endfor %}
+              </ul>
+          {% else %}
+              <p>No results available.</p>
+          {% endif %}
+        </div>
+        <!-- Draw -->
+        <div class="d-flex justify-content-center align-content-center">
+          <button type='button' onClick="location.reload();" class="btn btn-outline-primary mx-2" style="width:150px;"><i class="bi bi-dice-3"></i> 다시 추출 </button>
+          <button type='button' onClick="window.location.href='{{ url_for('index') }}'" class="btn btn-outline-primary mx-2" style="width:150px;"><i class="bi bi-gear"></i> 조건 재설정</button>
+        </div>
+      </form>
+    </section>
+{% endblock %}

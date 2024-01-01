@@ -1,0 +1,35 @@
+.lotto-ball {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 5px;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: bold;
+    background-color : rgba(255, 99, 132, 0.8);
+}
+
+/* 추가된 CSS 스타일 - 각 구간에 따른 색상 */
+.lotto-ball.range-1 { background-color: rgba(251, 196, 0, 0.8); }
+.lotto-ball.range-2 { background-color: rgba(105, 200, 242, 0.8); }
+.lotto-ball.range-3 { background-color: rgba(255, 114, 114, 0.8); }
+.lotto-ball.range-4 { background-color: rgba(170, 170, 170, 0.8); }
+.lotto-ball.range-5 { background-color: rgba(176, 216, 64, 0.8); }
+
+body {
+    margin-bottom: 100px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+footer {
+    bottom: 0;
+    background-color: white;
+}
+
+.chart-wrap {
+    width: 800px;
+    height: 1200px;
+}
+

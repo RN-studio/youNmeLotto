@@ -1,0 +1,69 @@
+from flask import Flask, render_template, request
+import pandas as pd
+import random
+
+app = Flask(__name__)
+
+# 예시 데이터프레임 생성
+df = pd.read_csv('lottoHistory.csv')
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/result', methods=['POST'])
+def result():
+    df_temp = pd.DataFrame()
+    del_number = []
+    for i in range(1, 7):
+        try:
+            value = int(request.form[f'deleteNumber{i}'])
+            if 1 <= value <= 45:
+                del_number.append(value - 1)
+            else:
+                pass
+        except (KeyError, ValueError):
+            pass
+
+    num_of_games = int(request.form['game_count']) * 5
+    weight_option = request.form['weight_option']
+
+    # 번호 삭제
+    if len(del_number) >= 1:
+        for i in del_number:
+            df_temp = df.drop(index=del_number)
+    else:
+        df_temp = df
+
+    # 가중치 계산
+    if weight_option == '1':
+        weights = df['Ratio']
+    elif weight_option == '2':
+        weights = 1 / df['Ratio']
+    elif weight_option == '3':
+        df['Ratio'] = 1
+        weights = df['Ratio']
+    else:
+        return "올바른 가중치 옵션을 선택하세요."
+
+    # 로또 번호 추출 및 정렬
+    results = []
+    if weight_option == 1 | 2:
+        for game in range(1, num_of_games + 1):
+            selected_numbers = random.sample(sorted(df_temp['Value'].tolist(), key=lambda x: random.choice(weights)), k=6)
+            results.append({"game": game, "numbers": sorted(selected_numbers)})
+    else:
+        for game in range(1, num_of_games + 1):
+            selected_numbers = sorted(random.sample(df_temp['Value'].tolist(), k=6))
+            results.append({"game": game, "numbers": sorted(selected_numbers)})
+
+    return render_template('result.html', results=results)
+
+@app.route('/statics')
+def statics():
+    return render_template('statics.html', lotto_data=df.sort_values('Count', ascending=False))
+
+if __name__ == '__main__':
+    app.run(debug=False, host='0.0.0.0', port=8001)
+
+

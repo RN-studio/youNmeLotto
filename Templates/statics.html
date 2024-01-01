@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Lotto Hot-place{% endblock %}
+
+{% block content %}
+    <section>
+        <form class="container" action="/result" method="post">
+            <div class="row justify-content-center align-content-center pt-6 mb-5">
+                <div class="container chart-wrap">
+	                <canvas id="historicChart" width="800vh" height="1200vw"></canvas>
+                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                    // Chart.js를 사용하여 막대 그래프 생성
+                    var ctx = document.getElementById('historicChart').getContext('2d');
+                    var lottoData = {
+                        labels: [{% for value in lotto_data['Value'] %}"{{ value }}", {% endfor %}],
+                        datasets: [{
+                            label: '역대 출현 횟수(보너스 포함)',
+                            data: [{% for count in lotto_data['Count'] %}{{ count }}, {% endfor %}],
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    };
+
+                    var lottoChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: lottoData,
+                        options: {
+                            maintainAspectRatio: false,
+                            indexAxis:'y',
+                            scales: {
+                                x: {
+                                    type: 'linear', // X 축의 유형을 linear로 설정
+                                    position: 'bottom', // X 축의 위치를 bottom으로 설정
+                                    min: 100, // X 축의 최소값 설정
+                                    max: 220, // X 축의 최대값 설정
+                                }
+                            }
+                        }
+                    });
+                });
+                </script>
+            </div>
+        </form>
+    </section>
+{% endblock %}
