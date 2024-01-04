@@ -55,8 +55,49 @@
       </div>
       <!-- Draw -->
       <div class="d-flex justify-content-center align-content-center">
-        <button type="submit" class="btn btn-outline-primary"><i class="bi bi-dice-3"></i> 추출</button>
+        <button type="submit" class="btn btn-outline-primary onclick=saveInputValues()"><i class="bi bi-dice-3"></i> 추출</button>
       </div>
     </form>
   </section>
+  <script>
+  // 페이지 로드 시 저장된 값이 있으면 적용
+  window.onload = function () {
+    if (localStorage.getItem('deleteNumber1')) {
+      document.getElementById('deleteNumber1').value = localStorage.getItem('deleteNumber1');
+    }
+    if (localStorage.getItem('deleteNumber2')) {
+      document.getElementById('deleteNumber2').value = localStorage.getItem('deleteNumber2');
+    }
+    if (localStorage.getItem('deleteNumber3')) {
+      document.getElementById('deleteNumber3').value = localStorage.getItem('deleteNumber3');
+    }
+    if (localStorage.getItem('deleteNumber4')) {
+      document.getElementById('deleteNumber4').value = localStorage.getItem('deleteNumber4');
+    }
+    if (localStorage.getItem('deleteNumber5')) {
+      document.getElementById('deleteNumber5').value = localStorage.getItem('deleteNumber5');
+    }
+    if (localStorage.getItem('deleteNumber6')) {
+      document.getElementById('deleteNumber6').value = localStorage.getItem('deleteNumber6');
+    }
+    if (localStorage.getItem('weight_option')) {
+      document.getElementById('weight_option').value = localStorage.getItem('weight_option');
+    }
+    if (localStorage.getItem('game_count')) {
+      document.getElementById('game_count').value = localStorage.getItem('game_count');
+    }
+  };
+
+  // 입력값 저장 함수
+  function saveInputValues() {
+    localStorage.setItem('deleteNumber1', document.getElementById('deleteNumber1').value);
+    localStorage.setItem('deleteNumber2', document.getElementById('deleteNumber2').value);
+    localStorage.setItem('deleteNumber3', document.getElementById('deleteNumber3').value);
+    localStorage.setItem('deleteNumber4', document.getElementById('deleteNumber4').value);
+    localStorage.setItem('deleteNumber5', document.getElementById('deleteNumber5').value);
+    localStorage.setItem('deleteNumber6', document.getElementById('deleteNumber6').value);
+    localStorage.setItem('weight_option', document.getElementById('weight_option').value);
+    localStorage.setItem('game_count', document.getElementById('game_count').value);
+  }
+</script>
 {% endblock %}
