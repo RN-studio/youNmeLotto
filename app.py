@@ -1,15 +1,27 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import random
+import sqlite3
 
 app = Flask(__name__)
 
 # 예시 데이터프레임 생성
-df = pd.read_csv('lottoHistory.csv')
+conn = sqlite3.connect('lottoRatio.db')
+cursor = conn.cursor()
+
+query = cursor.execute("SELECT * FROM lotto_ratio")
+
+cols = [column[0] for column in query.description]
+
+df = pd.DataFrame.from_records(data=query.fetchall(), columns=cols)
+
+conn.close()
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/result', methods=['POST'])
 def result():
@@ -50,7 +62,8 @@ def result():
     results = []
     if weight_option == 1 | 2:
         for game in range(1, num_of_games + 1):
-            selected_numbers = random.sample(sorted(df_temp['Value'].tolist(), key=lambda x: random.choice(weights)), k=6)
+            selected_numbers = random.sample(sorted(df_temp['Value'].tolist(), key=lambda x: random.choice(weights)),
+                                             k=6)
             results.append({"game": game, "numbers": sorted(selected_numbers)})
     else:
         for game in range(1, num_of_games + 1):
@@ -59,11 +72,11 @@ def result():
 
     return render_template('result.html', results=results)
 
+
 @app.route('/statics')
 def statics():
     return render_template('statics.html', lotto_data=df.sort_values('Count', ascending=False))
 
+
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=8001)
-
-
+    app.run()
