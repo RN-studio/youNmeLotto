@@ -19,6 +19,7 @@ conn.close()
 
 @app.route('/sitemap.xml')
 @app.route('/robots.txt')
+@app.route('/ads.txt')
 def robot_to_root():
     return send_from_directory(app.static_folder, request.path[1:])
 
