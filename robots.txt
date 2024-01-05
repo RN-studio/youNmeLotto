@@ -1,3 +1,0 @@
-User-agent: *
-Allow:/
-Sitemap: https://www.ynmlotto.site/sitemap.xml

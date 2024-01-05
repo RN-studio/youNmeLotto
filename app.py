@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, send_from_directory
 import pandas as pd
 import random
 import sqlite3
@@ -17,6 +17,10 @@ df = pd.DataFrame.from_records(data=query.fetchall(), columns=cols)
 
 conn.close()
 
+@app.route('/sitemap.xml')
+@app.route('/robots.txt')
+def robot_to_root():
+    return send_from_directory(app.static_folder, request.path[1:])
 
 @app.route('/')
 def index():
