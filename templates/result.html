@@ -8,18 +8,18 @@
         <div class="d-flex justify-content-center align-content-center mb-4">
           <h3 class="text-center">1등 되면 뽀찌 좀 주세요</h3>
         </div>
-        <div class="d-flex justify-content-center align-content-center mb-4">
+        <div id="result-box" class="d-flex justify-content-center align-content-center mb-4">
           {% if results %}
-              <ul class="p-0">
-                  {% for result in results %}
-                    <ul class="m-2">
-                        <span class="game-number">게임{% if result['game'] < 10 %} {% endif %}{{ result['game'] }} : </span>
-                        {% for number in result['numbers'] %}
-                            <span class="lotto-ball range-{{ Math.floor((number - 1), 10) + 1 }}">{{ number }}</span>
-                        {% endfor %}
-                    </ul>
+            <ul>
+              {% for result in results %}
+                <ul class="m-2">
+                  <span class="game-number">게임{% if result['game'] < 10 %} {% endif %}{{ result['game'] }} : </span>
+                  {% for number in result['numbers'] %}
+                    <span class="lotto-ball range-{{ ((number - 1) // 10) + 1 }}">{{ number }}</span>
                   {% endfor %}
-              </ul>
+                </ul>
+              {% endfor %}
+            </ul>
           {% else %}
               <p>No results available.</p>
           {% endif %}

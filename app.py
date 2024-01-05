@@ -25,7 +25,7 @@ def index():
 
 @app.route('/result', methods=['POST'])
 def result():
-    df_temp = pd.DataFrame()
+
     del_number = []
     for i in range(1, 7):
         try:
