@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import random
 import sqlite3
@@ -42,8 +42,7 @@ def result():
 
     # 번호 삭제
     if len(del_number) >= 1:
-        for i in del_number:
-            df_temp = df.drop(index=del_number)
+        df_temp = df.drop(index=del_number)
     else:
         df_temp = df
 
@@ -60,7 +59,7 @@ def result():
 
     # 로또 번호 추출 및 정렬
     results = []
-    if weight_option == 1 | 2:
+    if weight_option == '1' or weight_option == '2':
         for game in range(1, num_of_games + 1):
             selected_numbers = random.sample(sorted(df_temp['Value'].tolist(), key=lambda x: random.choice(weights)),
                                              k=6)

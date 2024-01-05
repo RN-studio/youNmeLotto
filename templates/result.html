@@ -15,7 +15,7 @@
                     <ul class="m-2">
                         <span class="game-number">게임{% if result['game'] < 10 %} {% endif %}{{ result['game'] }} : </span>
                         {% for number in result['numbers'] %}
-                            <span class="lotto-ball range-{{ (number - 1) // 10 + 1 }}">{{ number }}</span>
+                            <span class="lotto-ball range-{{ Math.floor((number - 1), 10) + 1 }}">{{ number }}</span>
                         {% endfor %}
                     </ul>
                   {% endfor %}
@@ -24,16 +24,14 @@
               <p>No results available.</p>
           {% endif %}
         </div>
-        <script>
-          function reloadPage() {
-            location.reload();
-          }
-        </script>
         <!-- Draw -->
         <div class="d-flex justify-content-center align-content-center">
-          <button type='button' onClick="reloadPage()" class="btn btn-outline-primary mx-2" style="width:150px;"><i class="bi bi-dice-3"></i> 다시 추출 </button>
+          <button type='button' onclick="location.reload()" class="btn btn-outline-primary mx-2" style="width:150px;"><i class="bi bi-dice-3"></i> 다시 추출 </button>
           <button type='button' onClick="window.location.href='{{ url_for('index') }}'" class="btn btn-outline-primary mx-2" style="width:150px;"><i class="bi bi-gear"></i> 조건 재설정</button>
         </div>
       </form>
     </section>
+    <script>
+
+    </script>
 {% endblock %}
