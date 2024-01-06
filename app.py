@@ -65,7 +65,6 @@ def result():
     else:
         return "올바른 가중치 옵션을 선택하세요."
 
-    print('dd')
     # 로또 번호 추출 및 정렬
     results = []
     if weight_option == 1:
