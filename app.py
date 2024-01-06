@@ -43,7 +43,8 @@ def result():
             pass
 
     num_of_games = int(request.form['game_count']) * 5
-    weight_option = request.form['weight_option']
+    weight_option =int(request.form['weight_option'])
+
 
     # 번호 삭제
     if len(del_number) >= 1:
@@ -51,20 +52,28 @@ def result():
     else:
         df_temp = df
 
+
+
     # 가중치 계산
-    if weight_option == '1':
+    if weight_option == 1:
         weights = df['Ratio']
-    elif weight_option == '2':
+    elif weight_option == 2:
         weights = 1 / df['Ratio']
-    elif weight_option == '3':
+    elif weight_option == 3:
         df['Ratio'] = 1
         weights = df['Ratio']
     else:
         return "올바른 가중치 옵션을 선택하세요."
 
+    print('dd')
     # 로또 번호 추출 및 정렬
     results = []
-    if weight_option == '1' or weight_option == '2':
+    if weight_option == 1:
+        for game in range(1, num_of_games + 1):
+            selected_numbers = random.sample(sorted(df_temp['Value'].tolist(), key=lambda x: random.choice(weights)),
+                                             k=6)
+            results.append({"game": game, "numbers": sorted(selected_numbers)})
+    elif weight_option == 2:
         for game in range(1, num_of_games + 1):
             selected_numbers = random.sample(sorted(df_temp['Value'].tolist(), key=lambda x: random.choice(weights)),
                                              k=6)
