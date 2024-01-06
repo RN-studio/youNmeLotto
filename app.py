@@ -54,12 +54,11 @@ def result():
 
     # 가중치 계산
     if weight_option == 1:
-        weights = df['Ratio']
+        weights = df['Ratio'].tolist()
     elif weight_option == 2:
-        weights = 1 / df['Ratio']
+        weights = [1 - ratio for ratio in df['Ratio'].tolist()]
     elif weight_option == 3:
-        df['Ratio'] = 1
-        weights = df['Ratio']
+        weights = 1
     else:
         return "올바른 가중치 옵션을 선택하세요."
 
